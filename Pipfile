@@ -8,6 +8,9 @@ pylint = "*"
 
 [packages]
 flask = "*"
+firebase-admin = "*"
+google-cloud-firestore = "*"
+google-cloud-exceptions = "*"
 
 [requires]
 python_version = "3.7"

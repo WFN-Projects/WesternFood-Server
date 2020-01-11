@@ -24,13 +24,13 @@ def add_user_transaction(transaction, user_id):
     return Response('Transaction successfully added', 200)
 
 #TODO: Add authentication
-def add_user():
+def add_user(data):
     user = {
         'balance': 0,
         'gross_loaded': 0,
         'transaction_history': [],
         'joined_at': SERVER_TIMESTAMP
     }
-    db.collection('users').add(user)
+    db.collection('users').document(data['user_id']).set(user)
 
     return Response('Successfully added user', 200)

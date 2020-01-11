@@ -1,6 +1,6 @@
 import firebase_admin, time, google
 from firebase_admin import credentials, firestore
-from google.cloud.firestore_v1 import ArrayUnion, SERVER_TIMESTAMP
+from google.cloud.firestore_v1 import ArrayUnion, SERVER_TIMESTAMP, Increment
 from flask import Response
 
 cred = credentials.Certificate("westernfood-40032-firebase-adminsdk-pksgj-64f15a1877.json")
@@ -17,11 +17,28 @@ def get_user_data(user_id):
     except google.cloud.exceptions.NotFound:
         return Response('failed', 'User does not exist!', 401)
 
-#TODO: Add authentication and error if user does not exist
+#TODO: Add authentication
 def add_user_transaction(transaction, user_id):
-    user_ref = db.collection('users').document(user_id)
-    user_ref.update({'transaction_history': ArrayUnion([transaction])})
-    return Response('Transaction successfully added', 200)
+    try:
+        user_ref = db.collection('users').document(user_id)
+        user_ref.update({
+            'balance': Increment(-transaction['price']),
+            'transaction_history': ArrayUnion([transaction])
+        })
+        return Response('Transaction successfully added', 200)
+    except google.cloud.exceptions.NotFound:
+        return Response('failed', 'User does not exist!', 401)
+
+#TODO: Add authentication
+def update_user_gross_loaded(load, user_id):
+    try:
+        user_ref = db.collection('users').document(user_id)
+        user_ref.update({
+            'gross_loaded': Increment(load)
+        })
+        return Response('Load successfully added', 200)
+    except google.cloud.exceptions.NotFound:
+        return Response('failed', 'User does not exist!', 401)
 
 #TODO: Add authentication
 def add_user(data):

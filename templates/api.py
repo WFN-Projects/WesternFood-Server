@@ -18,27 +18,25 @@ def get_user_data(user_id):
         return Response('failed', 'User does not exist!', 401)
 
 #TODO: Add authentication
-def add_user_transaction(transaction, user_id):
+def update_user(data, user_id):
     try:
         user_ref = db.collection('users').document(user_id)
+    except google.cloud.exceptions.NotFound:
+        return Response('failed', 'User does not exist!', 401)
+
+    if 'transaction' in data:
+        transaction = data['transaction']
         user_ref.update({
             'balance': Increment(-transaction['price']),
             'transaction_history': ArrayUnion([transaction])
         })
-        return Response('Transaction successfully added', 200)
-    except google.cloud.exceptions.NotFound:
-        return Response('failed', 'User does not exist!', 401)
-
-#TODO: Add authentication
-def update_user_gross_loaded(load, user_id):
-    try:
-        user_ref = db.collection('users').document(user_id)
+    if 'load' in data:
+        load = data['load']
         user_ref.update({
             'gross_loaded': Increment(load)
         })
-        return Response('Load successfully added', 200)
-    except google.cloud.exceptions.NotFound:
-        return Response('failed', 'User does not exist!', 401)
+
+    return Response('User data successfully updated', 200)
 
 #TODO: Add authentication
 def add_user(data):

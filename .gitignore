@@ -1,4 +1,5 @@
 /.vscode
 __pycache__/
+/western-server-env
 /western-food-env
 westernfood-40032-firebase-adminsdk-pksgj-64f15a1877.json

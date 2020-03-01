@@ -3,11 +3,15 @@
 
 from scraper.scrape import scrapeFile
 from selenium import webdriver
+import platform
 # from private import *
 
 def get_scraped_data(login_user, login_pass):
     ## UWO LOGIN TO CAMPUS MEAL PLAN
-    browser = webdriver.Chrome("chromedriver.exe")
+    if platform.system() == 'Linux':
+        browser = webdriver.Chrome("chromedriver")
+    elif platform.system() == 'Windows':
+        browser = webdriver.Chrome("chromedriver.exe")
     browser.get("https://mealplan.uwo.ca/topup/")
     username = browser.find_element_by_id("username")
     password = browser.find_element_by_id("password")

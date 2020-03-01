@@ -1,5 +1,5 @@
 from templates import app, api
-from flask import request, Response
+from flask import request, Response, jsonify
 from scraper.main import get_scraped_data
 
 @app.route('/', methods=['GET'])
@@ -12,8 +12,7 @@ def login():
     # if not request.content_type == 'application/json':
         # return Response('failed', 'content_type must be application/json', 401)
     data = request.args
-    # print(data)
-    return get_scraped_data(data['user_id'], data['user_pass'])
+    return jsonify(get_scraped_data(data['user_id'], data['user_pass']))
 
 #TODO: Add authentication
 @app.route('/api/users/<user_id>', methods=['GET'])

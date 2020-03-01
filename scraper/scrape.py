@@ -3,7 +3,7 @@
 import re
 from bs4 import *
 import os
-from transactionClass import *
+from scraper.transactionClass import *
 
 def scrapeFile(url):
     soup = BeautifulSoup(open(url), "html.parser")
@@ -58,3 +58,5 @@ def scrapeFile(url):
         # print(element)
         trans = Transaction(element[3], element[4], element[5], element[9], element[10], element[11])
         final.append(trans)
+
+    return final

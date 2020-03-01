@@ -19,8 +19,7 @@ def get_scraped_data(login_user, login_pass):
 
     # enter these in private.py
     username.send_keys(login_user)
-    password.send_keys(login_pass)
-    submit.click()
+    password.send_keys(login_pass + '\n')
 
     ## GO TO TRANSACTION PAGE
     browser.get("https://mealplan.uwo.ca/topup/index.cfm/history30")

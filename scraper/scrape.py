@@ -20,11 +20,6 @@ def scrapeFile(url):
     # splits html string into a list of lines
     text = text.splitlines()
 
-    print('\n\n\n\n\n')
-    print(text)
-    print('\n\n\n\n\n')
-
-
     # traverse through the text
     for x in range(0, len(text) - 1):
         # print('\n\n\n\n\n')
@@ -53,16 +48,9 @@ def scrapeFile(url):
             TransList.append(entry)
 
     # cleaning the transaction list entries to format it nicely
-    # print('\n\n\n\n\n')
-    # print(TransList)
-    # print('\n\n\n\n\n')
     TransListClean = [x for x in TransList if x != [] and " Date" in x]
-    # TransListClean.remove(TransListClean[0])
     TransListClean.pop(0)
     TransListClean.pop(0)
-    print('\n\n\n\n\n')
-    print(TransListClean)
-    print('\n\n\n\n\n')
 
     # list of final cleaned entries
     final = []

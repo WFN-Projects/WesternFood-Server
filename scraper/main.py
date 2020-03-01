@@ -4,12 +4,18 @@
 from scraper.scrape import scrapeFile
 from selenium import webdriver
 import platform
-# from private import *
+from pyvirtualdisplay import Display
+
 
 def get_scraped_data(login_user, login_pass):
     ## UWO LOGIN TO CAMPUS MEAL PLAN
     if platform.system() == 'Linux':
-        browser = webdriver.Chrome("chromedriver")
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--no-sandbox')
+        options.add_argument('--headless')
+        browser = webdriver.Chrome(chrome_options=options)
     elif platform.system() == 'Windows':
         browser = webdriver.Chrome("chromedriver.exe")
     browser.get("https://mealplan.uwo.ca/topup/")
